@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konversi Markdown ke PDF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Left Side: Upload Card -->
+        <div class="card">
+            <div class="header">
+                <div class="icon-wrapper">
+                    <i class="fa-brands fa-markdown"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <h1>Markdown ke PDF</h1>
+                <p>Konversi dokumentasi Anda menjadi PDF profesional dalam hitungan detik.</p>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-content">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Seret & Lepas file .md di sini</h3>
+                    <p>atau <span class="browse-btn">pilih file</span></p>
+                    <input type="file" id="fileInput" accept=".md" hidden>
+                </div>
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <i class="fa-solid fa-file-code"></i>
+                    <span id="fileName">example.md</span>
+                    <i class="fa-solid fa-xmark remove-file" id="removeFile"></i>
+                </div>
+            </div>
+
+            <button id="convertBtn" class="convert-btn" disabled>
+                <span class="btn-text">Konversi & Pratinjau</span>
+                <span class="btn-loader"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+            </button>
+
+            <div class="paper-options" id="paperOptions" style="display: none;">
+                <label for="paperSize"><i class="fa-solid fa-file"></i> Ukuran Kertas:</label>
+                <select id="paperSize">
+                    <option value="single">Halaman Tunggal (Tinggi Otomatis)</option>
+                    <option value="a4">A4 Multi-halaman (210×297mm)</option>
+                    <option value="letter">Letter Multi-halaman (8.5×11in)</option>
+                </select>
+            </div>
+
+            <!-- Error/Success Message Area -->
+            <div id="messageArea" class="message-area"></div>
+        </div>
+
+        <!-- Right Side: PDF Preview Panel -->
+        <div id="previewPanel" class="preview-panel">
+            <!-- Progress Header (shown during conversion) -->
+            <div id="progressHeader" class="preview-header progress-mode" style="display: none;">
+                <div class="progress-header-content">
+                    <i class="fa-solid fa-gear fa-spin"></i>
+                    <span id="progressStatus">Mengkonversi...</span>
+                </div>
+                <div class="progress-steps">
+                    <div class="step" id="step1"><i class="fa-solid fa-file-code"></i></div>
+                    <div class="step" id="step2"><i class="fa-solid fa-diagram-project"></i></div>
+                    <div class="step" id="step3"><i class="fa-solid fa-file-pdf"></i></div>
+                </div>
+            </div>
+
+            <!-- Normal Header (shown after conversion) -->
+            <div id="normalHeader" class="preview-header" style="display: none;">
+                <h2><i class="fa-solid fa-file-pdf"></i> <span id="previewFileName">Pratinjau PDF</span></h2>
+                <button id="downloadBtn" class="download-btn">
+                    <i class="fa-solid fa-download"></i> Unduh PDF
+                </button>
+            </div>
+
+            <div class="preview-content">
+                <div id="previewPlaceholder" class="preview-placeholder">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <h3>Preview PDF akan muncul di sini</h3>
+                    <div class="tutorial-steps">
+                        <p class="tutorial-title">Cara Menggunakan:</p>
+                        <ol>
+                            <li><i class="fa-solid fa-upload"></i> Unggah file <strong>.md</strong> di sebelah kiri</li>
+                            <li><i class="fa-solid fa-gear"></i> Pilih ukuran kertas (opsional)</li>
+                            <li><i class="fa-solid fa-play"></i> Klik tombol <strong>"Konversi & Pratinjau"</strong>
+                            </li>
+                            <li><i class="fa-solid fa-download"></i> Unduh PDF setelah selesai</li>
+                        </ol>
+                    </div>
+                </div>
+                <iframe id="pdfPreview" class="pdf-iframe" style="display: none;"></iframe>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const removeFile = document.getElementById('removeFile');
+        const convertBtn = document.getElementById('convertBtn');
+        const dropZoneContent = document.querySelector('.drop-zone-content');
+        const messageArea = document.getElementById('messageArea');
+        const paperOptions = document.getElementById('paperOptions');
+        const paperSize = document.getElementById('paperSize');
+
+        let selectedFile = null;
+
+        // Click to upload
+        dropZone.addEventListener('click', (e) => {
+            if (e.target !== removeFile && !selectedFile) {
+                fileInput.click();
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFile(e.target.files[0]);
+        });
+
+        // Drag & Drop
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file) return;
+            if (!file.name.endsWith('.md')) {
+                showMessage('Please upload a .md file', 'error');
+                return;
+            }
+
+            selectedFile = file;
+            fileName.textContent = file.name;
+            dropZoneContent.style.display = 'none';
+            fileInfo.style.display = 'flex';
+            convertBtn.disabled = false;
+            dropZone.classList.add('has-file');
+            paperOptions.style.display = 'flex';
+            showMessage('');
+        }
+
+        removeFile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetUI();
+        });
+
+        function resetUI() {
+            selectedFile = null;
+            fileInput.value = '';
+            dropZoneContent.style.display = 'flex';
+            fileInfo.style.display = 'none';
+            convertBtn.disabled = true;
+            dropZone.classList.remove('has-file');
+            paperOptions.style.display = 'none';
+            paperSize.value = 'single';
+            showMessage('');
+        }
+
+        function showMessage(msg, type = 'info') {
+            messageArea.textContent = msg;
+            messageArea.className = 'message-area ' + type;
+        }
+
+        // Preview panel elements
+        const previewPanel = document.getElementById('previewPanel');
+        const pdfPreview = document.getElementById('pdfPreview');
+        const previewPlaceholder = document.getElementById('previewPlaceholder');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const progressHeader = document.getElementById('progressHeader');
+        const normalHeader = document.getElementById('normalHeader');
+        const previewFileName = document.getElementById('previewFileName');
+        const progressStatus = document.getElementById('progressStatus');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        let currentPdfUrl = null;
+        let currentFileName = '';
+
+        // Download PDF from preview
+        downloadBtn.addEventListener('click', () => {
+            if (currentPdfUrl) {
+                const a = document.createElement('a');
+                a.href = currentPdfUrl;
+                a.download = currentFileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                showMessage('PDF berhasil diunduh!', 'success');
+            } else {
+                showMessage('Belum ada PDF untuk diunduh', 'error');
+            }
+        });
+
+        function showProgressHeader(show) {
+            if (show) {
+                progressHeader.style.display = 'flex';
+                normalHeader.style.display = 'none';
+                // Reset steps
+                step1.classList.remove('active', 'done');
+                step2.classList.remove('active', 'done');
+                step3.classList.remove('active', 'done');
+            } else {
+                progressHeader.style.display = 'none';
+                normalHeader.style.display = 'flex';
+            }
+        }
+
+        function updateProgress(stepNum, status) {
+            progressStatus.textContent = status;
+
+            if (stepNum >= 1) step1.classList.add('active');
+            if (stepNum >= 2) {
+                step1.classList.remove('active');
+                step1.classList.add('done');
+                step2.classList.add('active');
+            }
+            if (stepNum >= 3) {
+                step2.classList.remove('active');
+                step2.classList.add('done');
+                step3.classList.add('active');
+            }
+        }
+
+        convertBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            convertBtn.classList.add('loading');
+            convertBtn.disabled = true;
+            showMessage('', 'info');
+            showProgressHeader(true);
+            updateProgress(1, 'Memproses Markdown...');
+
+            const formData = new FormData();
+            formData.append('markdown', selectedFile);
+            formData.append('paperSize', paperSize.value);
+
+            try {
+                // Simulate step progress
+                setTimeout(() => updateProgress(2, 'Merender diagram...'), 500);
+                setTimeout(() => updateProgress(3, 'Membuat PDF...'), 1500);
+
+                const response = await fetch('/convert', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.error || 'Conversion failed');
+                }
+
+                // Mark all steps done
+                step3.classList.remove('active');
+                step3.classList.add('done');
+                progressStatus.textContent = 'Selesai!';
+
+                // Show PDF in preview panel
+                const blob = await response.blob();
+
+                // Clean up old URL
+                if (currentPdfUrl) {
+                    window.URL.revokeObjectURL(currentPdfUrl);
+                }
+
+                currentPdfUrl = window.URL.createObjectURL(blob);
+                currentFileName = selectedFile.name.replace('.md', '.pdf');
+
+                // Brief delay to show "Complete!" then switch to normal header
+                setTimeout(() => {
+                    previewFileName.textContent = currentFileName;
+                    showProgressHeader(false);
+                    previewPlaceholder.style.display = 'none';
+                    pdfPreview.style.display = 'block';
+                    pdfPreview.src = currentPdfUrl;
+                }, 500);
+
+                showMessage('✓ Konversi selesai!', 'success');
+            } catch (error) {
+                console.error(error);
+                showProgressHeader(false);
+                showMessage(error.message, 'error');
+            } finally {
+                convertBtn.classList.remove('loading');
+                convertBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

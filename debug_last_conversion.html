@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 2;
+    word-wrap: break-word;
+    color: #24292f;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #d0d7de;
+}
+
+h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #d0d7de;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+a {
+    color: #0969da;
+    text-decoration: none;
+}
+
+blockquote {
+    padding: 0 1em;
+    color: #57606a;
+    border-left: 0.25em solid #d0d7de;
+    margin: 0 0 16px 0;
+}
+
+ul,
+ol {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-left: 2em;
+}
+
+img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #d0d7de;
+    border: 0;
+}
+
+/* Tables */
+table:not(.highlight-table) {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-bottom: 16px;
+    width: 100%;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+}
+
+table:not(.highlight-table) th,
+table:not(.highlight-table) td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
+}
+
+table:not(.highlight-table) tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+
+/* Alerts */
+.markdown-alert {
+    padding: 16px;
+    margin-bottom: 16px;
+    color: inherit;
+    border-left: 4px solid #d0d7de;
+    background-color: #f6f8fa;
+    border-radius: 0 6px 6px 0;
+}
+
+.markdown-alert p {
+    color: #000000 !important;
+    /* Pure black */
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin: 8px 0 !important;
+    /* Start margin */
+    display: block !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.markdown-alert .highlight {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    background-color: #2D2A2E !important;
+    /* Ensure background is dark */
+}
+
+.markdown-alert p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.markdown-alert-title {
+    margin-bottom: 8px !important;
+    font-weight: 600;
+}
+
+.markdown-alert-note {
+    border-left-color: #0969da;
+    background-color: #ddf4ff;
+}
+
+.markdown-alert-note .markdown-alert-title {
+    color: #0969da;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-important {
+    border-left-color: #8250df;
+    background-color: #f5f0ff;
+    /* Light purple */
+}
+
+.markdown-alert-important .markdown-alert-title {
+    color: #8250df;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-warning {
+    border-left-color: #bf8700;
+    background-color: #fff8c5;
+    /* Light yellow */
+}
+
+.markdown-alert-warning .markdown-alert-title {
+    color: #bf8700;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-tip {
+    border-left-color: #1a7f37;
+    background-color: #dafbe1;
+    /* Light green */
+}
+
+.markdown-alert-tip .markdown-alert-title {
+    color: #1a7f37;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-caution {
+    border-left-color: #d1242f;
+    background-color: #ffebe9;
+    /* Light red */
+}
+
+.markdown-alert-caution .markdown-alert-title {
+    color: #d1242f;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-title svg {
+    margin-right: 8px;
+    fill: currentColor;
+}
+
+/* === MONOKAI PRO THEME & JETBRAINS MONO === */
+
+code,
+pre {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
+}
+
+/* Inline code separate from block */
+code:not(.blob-code code) {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: #ffdcb5;
+    /* Orange background requested */
+    color: #4a2f00;
+    /* Dark brown text for contrast */
+    border-radius: 6px;
+    border: 1px solid #ffcc99;
+}
+
+/* Syntax Highlight Container */
+.highlight {
+    background-color: #2D2A2E;
+    /* Monokai Pro Background */
+    border-radius: 6px;
+    line-height: 1.45;
+    overflow: hidden;
+    margin-bottom: 16px;
+    color: #FCFCFA;
+    /* Monokai Pro Foreground */
+    padding: 10px 0;
+}
+
+.highlight-table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.highlight-table td {
+    padding: 0;
+    border: 0;
+}
+
+/* Line Numbers */
+.blob-num {
+    width: auto;
+    /* Let it shrink */
+    min-width: 30px;
+    /* Minimal width */
+    padding-right: 10px !important;
+    /* Requested 10px */
+    padding-left: 2px !important;
+    /* Tight to left */
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 2.5 !important;
+    /* Interpreting request for line-height 2.5 */
+    color: #727072;
+    user-select: none;
+    border-right: 3px solid #5a585a;
+    font-weight: bold;
+}
+
+.blob-num::before {
+    content: attr(data-line-number);
+}
+
+/* Code Content */
+.blob-code {
+    padding-left: 10px !important;
+    /* Requested 10px */
+    padding-right: 10px !important;
+    vertical-align: top;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 13px;
+    line-height: 2.5 !important;
+    /* Synchronize line-height */
+    color: #FCFCFA;
+}
+
+/* Monokai Pro Syntax Colors */
+.hljs-comment,
+.hljs-quote {
+    color: #727072;
+    font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #FF6188;
+}
+
+/* Pink */
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #FF6188;
+}
+
+.hljs-literal {
+    color: #AB9DF2;
+}
+
+/* Purple */
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+    color: #FFD866;
+}
+
+/* Yellow */
+.hljs-built_in,
+.hljs-class .hljs-title {
+    color: #78DCE8;
+}
+
+/* Blue */
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #AB9DF2;
+}
+
+/* Purple */
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #A9DC76;
+}
+
+/* Green */
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+/* Print specific styles */
+@media print {
+    body {
+        padding: 0;
+    }
+
+    @page {
+        margin: 1.5cm;
+    }
+
+    .highlight {
+        background-color: #2D2A2E !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="markdown-body">
+        <h1 id="bab-7-sistem-autentikasi-halaman-login">Bab 7: Sistem Autentikasi (Halaman Login)</h1>
+<p>Setelah aset siap, kita masuk ke fitur autentikasi. Di proyek ini, kita menggunakan sistem Login sederhana tanpa halaman Register publik (registrasi dilakukan via database atau pengembangan lanjut).</p>
+<p>User default yang tersedia (sesuai <code>database/schema.sql</code>):</p>
+<ul>
+<li><strong>Username</strong>: <code>admin</code></li>
+<li><strong>Password</strong>: <code>password</code></li>
+</ul>
+<h2 id="71-halaman-login-pagesloginphp">7.1 Halaman Login <code>pages/login.php</code></h2>
+<p>Halaman ini menggunakan desain dari <code>style.css</code> yang sudah kita buat.</p>
+<p><code>File: pages/login.php</code></p>
+
+            <div class="highlight language-php">
+                <table class="highlight-table">
+                    <tbody>
+                <tr>
+                    <td class="blob-num" data-line-number="1"></td>
+                    <td class="blob-code"><span class="hljs-meta">&lt;?php</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="2"></td>
+                    <td class="blob-code"><span class="hljs-comment">/**</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="3"></td>
+                    <td class="blob-code"><span class="hljs-comment"> * Login Page</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="4"></td>
+                    <td class="blob-code"><span class="hljs-comment"> * WebGIS Pemetaan Desa</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="5"></td>
+                    <td class="blob-code"><span class="hljs-comment"> */</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="6"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="7"></td>
+                    <td class="blob-code"><span class="hljs-keyword">require_once</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">&#x27;/../lib/auth.php&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="8"></td>
+                    <td class="blob-code"><span class="hljs-keyword">require_once</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">&#x27;/../lib/helpers.php&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="9"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="10"></td>
+                    <td class="blob-code"><span class="hljs-comment">// Redirect if already logged in</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="11"></td>
+                    <td class="blob-code"><span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">isLoggedIn</span>()) {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="12"></td>
+                    <td class="blob-code">    <span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">&#x27;/pages/dashboard.php&#x27;</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="13"></td>
+                    <td class="blob-code">}</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="14"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="15"></td>
+                    <td class="blob-code"><span class="hljs-variable">$error</span> = <span class="hljs-string">&#x27;&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="16"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="17"></td>
+                    <td class="blob-code"><span class="hljs-comment">// Handle form submission</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="18"></td>
+                    <td class="blob-code"><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REQUEST_METHOD&#x27;</span>] === <span class="hljs-string">&#x27;POST&#x27;</span>) {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="19"></td>
+                    <td class="blob-code">    <span class="hljs-variable">$username</span> = <span class="hljs-title function_ invoke__">sanitize</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>] ?? <span class="hljs-string">&#x27;&#x27;</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="20"></td>
+                    <td class="blob-code">    <span class="hljs-variable">$password</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>] ?? <span class="hljs-string">&#x27;&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="21"></td>
+                    <td class="blob-code">    </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="22"></td>
+                    <td class="blob-code">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$username</span>) || <span class="hljs-keyword">empty</span>(<span class="hljs-variable">$password</span>)) {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="23"></td>
+                    <td class="blob-code">        <span class="hljs-variable">$error</span> = <span class="hljs-string">&#x27;Username dan password harus diisi&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="24"></td>
+                    <td class="blob-code">    } <span class="hljs-keyword">else</span> {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="25"></td>
+                    <td class="blob-code">        <span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">loginUser</span>(<span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="26"></td>
+                    <td class="blob-code">        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$result</span>[<span class="hljs-string">&#x27;success&#x27;</span>]) {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="27"></td>
+                    <td class="blob-code">            <span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">&#x27;/pages/dashboard.php&#x27;</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="28"></td>
+                    <td class="blob-code">        } <span class="hljs-keyword">else</span> {</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="29"></td>
+                    <td class="blob-code">            <span class="hljs-variable">$error</span> = <span class="hljs-variable">$result</span>[<span class="hljs-string">&#x27;message&#x27;</span>];</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="30"></td>
+                    <td class="blob-code">        }</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="31"></td>
+                    <td class="blob-code">    }</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="32"></td>
+                    <td class="blob-code">}</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="33"></td>
+                    <td class="blob-code"><span class="hljs-meta">?&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="34"></td>
+                    <td class="blob-code">&lt;!DOCTYPE html&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="35"></td>
+                    <td class="blob-code">&lt;html lang=<span class="hljs-string">&quot;id&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="36"></td>
+                    <td class="blob-code">&lt;head&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="37"></td>
+                    <td class="blob-code">    &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="38"></td>
+                    <td class="blob-code">    &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="39"></td>
+                    <td class="blob-code">    &lt;title&gt;Login - WebGIS Pemetaan Desa&lt;/title&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="40"></td>
+                    <td class="blob-code">    </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="41"></td>
+                    <td class="blob-code">    &lt;!-- Fonts --&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="42"></td>
+                    <td class="blob-code">    &lt;link rel=<span class="hljs-string">&quot;preconnect&quot;</span> href=<span class="hljs-string">&quot;https://fonts.googleapis.com&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="43"></td>
+                    <td class="blob-code">    &lt;link rel=<span class="hljs-string">&quot;preconnect&quot;</span> href=<span class="hljs-string">&quot;https://fonts.gstatic.com&quot;</span> crossorigin&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="44"></td>
+                    <td class="blob-code">    &lt;link href=<span class="hljs-string">&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap&quot;</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="45"></td>
+                    <td class="blob-code">    </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="46"></td>
+                    <td class="blob-code">    &lt;!-- Font Awesome --&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="47"></td>
+                    <td class="blob-code">    &lt;link rel=<span class="hljs-string">&quot;stylesheet&quot;</span> href=<span class="hljs-string">&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="48"></td>
+                    <td class="blob-code">    </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="49"></td>
+                    <td class="blob-code">    &lt;!-- Custom CSS --&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="50"></td>
+                    <td class="blob-code">    &lt;link rel=<span class="hljs-string">&quot;stylesheet&quot;</span> href=<span class="hljs-string">&quot;/assets/css/style.css&quot;</span>&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="51"></td>
+                    <td class="blob-code">&lt;/head&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="52"></td>
+                    <td class="blob-code">&lt;body&gt;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="53"></td>
+                    <td class="blob-code">    &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=&quot;<span class="hljs-title">auth</span>-<span class="hljs-title">page</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="54"></td>
+                    <td class="blob-code"><span class="hljs-class">        &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">auth</span>-<span class="hljs-title">card</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="55"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">auth</span>-<span class="hljs-title">header</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="56"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;<span class="hljs-title">div</span> <span class="hljs-title">style</span>=&quot;<span class="hljs-title">font</span>-<span class="hljs-title">size</span>: 3<span class="hljs-title">rem</span>; <span class="hljs-title">color</span>: <span class="hljs-title">var</span>(--<span class="hljs-title">primary</span>); <span class="hljs-title">margin</span>-<span class="hljs-title">bottom</span>: 1<span class="hljs-title">rem</span>;&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="57"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">map</span>-<span class="hljs-title">marked</span>-<span class="hljs-title">alt</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="58"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="59"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;<span class="hljs-title">h1</span>&gt;<span class="hljs-title">Selamat</span> <span class="hljs-title">Datang</span>&lt;/<span class="hljs-title">h1</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="60"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;<span class="hljs-title">p</span>&gt;<span class="hljs-title">Masuk</span> <span class="hljs-title">ke</span> <span class="hljs-title">akun</span> <span class="hljs-title">WebGIS</span> <span class="hljs-title">Pemetaan</span> <span class="hljs-title">Desa</span>&lt;/<span class="hljs-title">p</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="61"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="62"></td>
+                    <td class="blob-code"><span class="hljs-class">            </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="63"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">auth</span>-<span class="hljs-title">body</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="64"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;?<span class="hljs-title">php</span> <span class="hljs-title">if</span> ($<span class="hljs-title">error</span>): ?&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="65"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">alert</span> <span class="hljs-title">alert</span>-<span class="hljs-title">danger</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="66"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">exclamation</span>-<span class="hljs-title">circle</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="67"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;?= <span class="hljs-title">sanitize</span>($<span class="hljs-title">error</span>) ?&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="68"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="69"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;?<span class="hljs-title">php</span> <span class="hljs-title">endif</span>; ?&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="70"></td>
+                    <td class="blob-code"><span class="hljs-class">                </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="71"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;?<span class="hljs-title">php</span> <span class="hljs-title">displayFlash</span>(); ?&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="72"></td>
+                    <td class="blob-code"><span class="hljs-class">                </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="73"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;<span class="hljs-title">form</span> <span class="hljs-title">method</span>=&quot;<span class="hljs-title">POST</span>&quot; <span class="hljs-title">action</span>=&quot;&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="74"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">group</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="75"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">label</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">label</span>&quot; <span class="hljs-title">for</span>=&quot;<span class="hljs-title">username</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="76"></td>
+                    <td class="blob-code"><span class="hljs-class">                            &lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">user</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt; <span class="hljs-title">Username</span> <span class="hljs-title">atau</span> <span class="hljs-title">Email</span></span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="77"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;/<span class="hljs-title">label</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="78"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">input</span> <span class="hljs-title">type</span>=&quot;<span class="hljs-title">text</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="79"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">id</span>=&quot;<span class="hljs-title">username</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="80"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">name</span>=&quot;<span class="hljs-title">username</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="81"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">control</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="82"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">placeholder</span>=&quot;<span class="hljs-title">Masukkan</span> <span class="hljs-title">username</span> <span class="hljs-title">atau</span> <span class="hljs-title">email</span>&quot;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="83"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">value</span>=&quot;&lt;?= <span class="hljs-title">sanitize</span>($<span class="hljs-title">_POST</span>[&#x27;<span class="hljs-title">username</span>&#x27;] ?? &#x27;&#x27;) ?&gt;&quot;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="84"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">required</span> </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="85"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">autofocus</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="86"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="87"></td>
+                    <td class="blob-code"><span class="hljs-class">                    </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="88"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">group</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="89"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">label</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">label</span>&quot; <span class="hljs-title">for</span>=&quot;<span class="hljs-title">password</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="90"></td>
+                    <td class="blob-code"><span class="hljs-class">                            &lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">lock</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt; <span class="hljs-title">Password</span></span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="91"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;/<span class="hljs-title">label</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="92"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">input</span> <span class="hljs-title">type</span>=&quot;<span class="hljs-title">password</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="93"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">id</span>=&quot;<span class="hljs-title">password</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="94"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">name</span>=&quot;<span class="hljs-title">password</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="95"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">control</span>&quot; </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="96"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">placeholder</span>=&quot;<span class="hljs-title">Masukkan</span> <span class="hljs-title">password</span>&quot;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="97"></td>
+                    <td class="blob-code"><span class="hljs-class">                               <span class="hljs-title">required</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="98"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="99"></td>
+                    <td class="blob-code"><span class="hljs-class">                    </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="100"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">form</span>-<span class="hljs-title">group</span>&quot; <span class="hljs-title">style</span>=&quot;<span class="hljs-title">display</span>: <span class="hljs-title">flex</span>; <span class="hljs-title">justify</span>-<span class="hljs-title">content</span>: <span class="hljs-title">flex</span>-<span class="hljs-title">start</span>; <span class="hljs-title">align</span>-<span class="hljs-title">items</span>: <span class="hljs-title">center</span>;&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="101"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">label</span> <span class="hljs-title">style</span>=&quot;<span class="hljs-title">display</span>: <span class="hljs-title">flex</span>; <span class="hljs-title">align</span>-<span class="hljs-title">items</span>: <span class="hljs-title">center</span>; <span class="hljs-title">gap</span>: 0.5<span class="hljs-title">rem</span>; <span class="hljs-title">cursor</span>: <span class="hljs-title">pointer</span>;&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="102"></td>
+                    <td class="blob-code"><span class="hljs-class">                            &lt;<span class="hljs-title">input</span> <span class="hljs-title">type</span>=&quot;<span class="hljs-title">checkbox</span>&quot; <span class="hljs-title">name</span>=&quot;<span class="hljs-title">remember</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="103"></td>
+                    <td class="blob-code"><span class="hljs-class">                            &lt;<span class="hljs-title">span</span> <span class="hljs-title">style</span>=&quot;<span class="hljs-title">font</span>-<span class="hljs-title">size</span>: 0.875<span class="hljs-title">rem</span>; <span class="hljs-title">color</span>: <span class="hljs-title">var</span>(--<span class="hljs-title">gray</span>-600);&quot;&gt;<span class="hljs-title">Ingat</span> <span class="hljs-title">saya</span>&lt;/<span class="hljs-title">span</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="104"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;/<span class="hljs-title">label</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="105"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="106"></td>
+                    <td class="blob-code"><span class="hljs-class">                    </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="107"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">button</span> <span class="hljs-title">type</span>=&quot;<span class="hljs-title">submit</span>&quot; <span class="hljs-title">class</span>=&quot;<span class="hljs-title">btn</span> <span class="hljs-title">btn</span>-<span class="hljs-title">primary</span> <span class="hljs-title">btn</span>-<span class="hljs-title">lg</span>&quot; <span class="hljs-title">style</span>=&quot;<span class="hljs-title">width</span>: 100%;&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="108"></td>
+                    <td class="blob-code"><span class="hljs-class">                        &lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">sign</span>-<span class="hljs-title">in</span>-<span class="hljs-title">alt</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt; <span class="hljs-title">Masuk</span></span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="109"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;/<span class="hljs-title">button</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="110"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;/<span class="hljs-title">form</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="111"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="112"></td>
+                    <td class="blob-code"><span class="hljs-class">            </span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="113"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">auth</span>-<span class="hljs-title">footer</span>&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="114"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;<span class="hljs-title">p</span> <span class="hljs-title">style</span>=&quot;<span class="hljs-title">margin</span>: 0; <span class="hljs-title">color</span>: <span class="hljs-title">var</span>(--<span class="hljs-title">gray</span>-600);&quot;&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="115"></td>
+                    <td class="blob-code"><span class="hljs-class">                    &lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>=&quot;/&quot;&gt;&lt;<span class="hljs-title">i</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">fas</span> <span class="hljs-title">fa</span>-<span class="hljs-title">arrow</span>-<span class="hljs-title">left</span>&quot;&gt;&lt;/<span class="hljs-title">i</span>&gt; <span class="hljs-title">Kembali</span> <span class="hljs-title">ke</span> <span class="hljs-title">halaman</span> <span class="hljs-title">utama</span>&lt;/<span class="hljs-title">a</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="116"></td>
+                    <td class="blob-code"><span class="hljs-class">                &lt;/<span class="hljs-title">p</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="117"></td>
+                    <td class="blob-code"><span class="hljs-class">            &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="118"></td>
+                    <td class="blob-code"><span class="hljs-class">        &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="119"></td>
+                    <td class="blob-code"><span class="hljs-class">    &lt;/<span class="hljs-title">div</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="120"></td>
+                    <td class="blob-code"><span class="hljs-class">&lt;/<span class="hljs-title">body</span>&gt;</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="121"></td>
+                    <td class="blob-code"><span class="hljs-class">&lt;/<span class="hljs-title">html</span>&gt;</span></td>
+                </tr></tbody>
+                </table>
+            </div><h2 id="72-proses-logout-processlogoutphp">7.2 Proses Logout <code>process/logout.php</code></h2>
+<p>File ini menghapus sesi dan mengarahkan user kembali ke login.</p>
+<p><code>File: process/logout.php</code></p>
+
+            <div class="highlight language-php">
+                <table class="highlight-table">
+                    <tbody>
+                <tr>
+                    <td class="blob-num" data-line-number="1"></td>
+                    <td class="blob-code"><span class="hljs-meta">&lt;?php</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="2"></td>
+                    <td class="blob-code"><span class="hljs-comment">/**</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="3"></td>
+                    <td class="blob-code"><span class="hljs-comment"> * Logout Process</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="4"></td>
+                    <td class="blob-code"><span class="hljs-comment"> * WebGIS Pemetaan Desa</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="5"></td>
+                    <td class="blob-code"><span class="hljs-comment"> */</span></td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="6"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="7"></td>
+                    <td class="blob-code"><span class="hljs-keyword">require_once</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">&#x27;/../lib/auth.php&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="8"></td>
+                    <td class="blob-code"><span class="hljs-keyword">require_once</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">&#x27;/../lib/helpers.php&#x27;</span>;</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="9"></td>
+                    <td class="blob-code"> </td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="10"></td>
+                    <td class="blob-code"><span class="hljs-title function_ invoke__">logoutUser</span>();</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="11"></td>
+                    <td class="blob-code"><span class="hljs-title function_ invoke__">setFlash</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Kalian telah logout&#x27;</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="12"></td>
+                    <td class="blob-code"><span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">&#x27;/pages/login.php&#x27;</span>);</td>
+                </tr>
+                <tr>
+                    <td class="blob-num" data-line-number="13"></td>
+                    <td class="blob-code"><span class="hljs-meta">?&gt;</span></td>
+                </tr></tbody>
+                </table>
+            </div><h3 id="penjelasan-kode">Penjelasan Kode</h3>
+<ol>
+<li><strong><code>loginUser()</code></strong>: Fungsi ini (dari <code>lib/auth.php</code>) memverifikasi username dan password hash.</li>
+<li><strong><code>displayFlash()</code></strong>: Jika ada pesan error atau sukses dari halaman sebelumnya (misal setelah logout), fungsi ini menampilkannya.</li>
+<li><strong><code>isLoggedIn()</code></strong>: Mencegah user yang sudah login mengakses halaman login lagi (langsung lempar ke dashboard).</li>
+</ol>
+
+    </div>
+</body>
+</html>
+      

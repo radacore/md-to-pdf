@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 2;
+    word-wrap: break-word;
+    color: #24292f;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #d0d7de;
+}
+
+h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #d0d7de;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+a {
+    color: #0969da;
+    text-decoration: none;
+}
+
+blockquote {
+    padding: 0 1em;
+    color: #57606a;
+    border-left: 0.25em solid #d0d7de;
+    margin: 0 0 16px 0;
+}
+
+ul,
+ol {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-left: 2em;
+}
+
+img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #d0d7de;
+    border: 0;
+}
+
+/* Tables */
+table:not(.highlight-table) {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-bottom: 16px;
+    width: 100%;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+}
+
+table:not(.highlight-table) th,
+table:not(.highlight-table) td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
+}
+
+table:not(.highlight-table) tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+
+/* Alerts */
+.markdown-alert {
+    padding: 16px;
+    margin-bottom: 16px;
+    color: inherit;
+    border-left: 4px solid #d0d7de;
+    background-color: #f6f8fa;
+    border-radius: 0 6px 6px 0;
+}
+
+.markdown-alert p {
+    color: #000000 !important;
+    /* Pure black */
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin: 8px 0 !important;
+    /* Start margin */
+    display: block !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.markdown-alert .highlight {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    background-color: #2D2A2E !important;
+    /* Ensure background is dark */
+}
+
+.markdown-alert p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.markdown-alert-title {
+    margin-bottom: 8px !important;
+    font-weight: 600;
+}
+
+.markdown-alert-note {
+    border-left-color: #0969da;
+    background-color: #ddf4ff;
+}
+
+.markdown-alert-note .markdown-alert-title {
+    color: #0969da;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-important {
+    border-left-color: #8250df;
+    background-color: #f5f0ff;
+    /* Light purple */
+}
+
+.markdown-alert-important .markdown-alert-title {
+    color: #8250df;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-warning {
+    border-left-color: #bf8700;
+    background-color: #fff8c5;
+    /* Light yellow */
+}
+
+.markdown-alert-warning .markdown-alert-title {
+    color: #bf8700;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-tip {
+    border-left-color: #1a7f37;
+    background-color: #dafbe1;
+    /* Light green */
+}
+
+.markdown-alert-tip .markdown-alert-title {
+    color: #1a7f37;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-caution {
+    border-left-color: #d1242f;
+    background-color: #ffebe9;
+    /* Light red */
+}
+
+.markdown-alert-caution .markdown-alert-title {
+    color: #d1242f;
+    display: flex;
+    align-items: center;
+}
+
+.markdown-alert-title svg {
+    margin-right: 8px;
+    fill: currentColor;
+}
+
+/* === MONOKAI PRO THEME & JETBRAINS MONO === */
+
+code,
+pre {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
+}
+
+/* Inline code separate from block */
+code:not(.blob-code code) {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: #ffdcb5;
+    /* Orange background requested */
+    color: #4a2f00;
+    /* Dark brown text for contrast */
+    border-radius: 6px;
+    border: 1px solid #ffcc99;
+}
+
+/* Syntax Highlight Container */
+.highlight {
+    background-color: #2D2A2E;
+    /* Monokai Pro Background */
+    border-radius: 6px;
+    line-height: 1.45;
+    overflow: hidden;
+    margin-bottom: 16px;
+    color: #FCFCFA;
+    /* Monokai Pro Foreground */
+    padding: 10px 0 10px 0;
+}
+
+.highlight-table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.highlight-table td {
+    padding: 0;
+    border: 0;
+}
+
+/* Line Numbers */
+.blob-num {
+    width: 1%;
+    /* Shrink to fit content */
+    min-width: unset;
+    /* No minimum width */
+    padding-right: 10px !important;
+    /* Space before border */
+    padding-left: 10px !important;
+    /* Flush to left edge */
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 2.5 !important;
+    /* Interpreting request for line-height 2.5 */
+    color: #727072;
+    user-select: none;
+    border-right: 3px solid #5a585a;
+    font-weight: bold;
+}
+
+.blob-num::before {
+    content: attr(data-line-number);
+}
+
+/* Code Content */
+.blob-code {
+    padding-left: 10px !important;
+    /* Space after border */
+    padding-right: 10px !important;
+    vertical-align: top;
+    word-wrap: normal;
+    white-space: pre;
+    /* Use pre instead of pre-wrap for ASCII art alignment */
+    font-size: 13px;
+    line-height: 2.5 !important;
+    /* Synchronize line-height */
+    color: #FCFCFA;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
+}
+
+/* Monokai Pro Syntax Colors */
+.hljs-comment,
+.hljs-quote {
+    color: #727072;
+    font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #FF6188;
+}
+
+/* Pink */
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #FF6188;
+}
+
+.hljs-literal {
+    color: #AB9DF2;
+}
+
+/* Purple */
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+    color: #FFD866;
+}
+
+/* Yellow */
+.hljs-built_in,
+.hljs-class .hljs-title {
+    color: #78DCE8;
+}
+
+/* Blue */
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #AB9DF2;
+}
+
+/* Purple */
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #A9DC76;
+}
+
+/* Green */
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+/* Print specific styles */
+@media print {
+    body {
+        padding: 0;
+    }
+
+    @page {
+        margin: 1.5cm;
+    }
+
+    .highlight {
+        background-color: #2D2A2E !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* HTML Tags in PHP (php-template) */
+.hljs-tag {
+    color: #FF6188;
+}
+
+.hljs-tag .hljs-name {
+    color: #78DCE8;
+}
+
+.hljs-tag .hljs-attr {
+    color: #A9DC76;
+}
+
+.hljs-tag .hljs-string {
+    color: #FFD866;
+}
