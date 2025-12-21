@@ -53,6 +53,14 @@
                 </select>
             </div>
 
+            <div class="flowchart-options" id="flowchartOptions" style="display: none;">
+                <label for="flowchartWidth"><i class="fa-solid fa-diagram-project"></i> Lebar Flowchart:</label>
+                <div class="slider-container">
+                    <input type="range" id="flowchartWidth" min="30" max="100" value="70" step="5">
+                    <span id="flowchartWidthValue">70%</span>
+                </div>
+            </div>
+
             <!-- Error/Success Message Area -->
             <div id="messageArea" class="message-area"></div>
         </div>
@@ -112,6 +120,14 @@
         const messageArea = document.getElementById('messageArea');
         const paperOptions = document.getElementById('paperOptions');
         const paperSize = document.getElementById('paperSize');
+        const flowchartOptions = document.getElementById('flowchartOptions');
+        const flowchartWidth = document.getElementById('flowchartWidth');
+        const flowchartWidthValue = document.getElementById('flowchartWidthValue');
+
+        // Update flowchart width display
+        flowchartWidth.addEventListener('input', () => {
+            flowchartWidthValue.textContent = flowchartWidth.value + '%';
+        });
 
         let selectedFile = null;
 
@@ -156,6 +172,7 @@
             convertBtn.disabled = false;
             dropZone.classList.add('has-file');
             paperOptions.style.display = 'flex';
+            flowchartOptions.style.display = 'flex';
             showMessage('');
         }
 
@@ -173,6 +190,9 @@
             dropZone.classList.remove('has-file');
             paperOptions.style.display = 'none';
             paperSize.value = 'single';
+            flowchartOptions.style.display = 'none';
+            flowchartWidth.value = '70';
+            flowchartWidthValue.textContent = '70%';
             showMessage('');
         }
 
@@ -253,6 +273,7 @@
             const formData = new FormData();
             formData.append('markdown', selectedFile);
             formData.append('paperSize', paperSize.value);
+            formData.append('flowchartWidth', flowchartWidth.value);
 
             try {
                 // Simulate step progress

@@ -48,7 +48,8 @@ app.post('/convert', upload.single('markdown'), async (req, res) => {
             console.error('Failed to delete temp file:', err);
         }
 
-        const pdfBuffer = await convertMdToPdf(mdContent, req.body.paperSize || 'single');
+        const flowchartWidth = parseInt(req.body.flowchartWidth) || 70;
+        const pdfBuffer = await convertMdToPdf(mdContent, req.body.paperSize || 'single', flowchartWidth);
 
         const originalName = req.file.originalname.replace(/\.md$/i, '');
         const filename = `${originalName}.pdf`;

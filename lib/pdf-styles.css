@@ -291,9 +291,10 @@ code:not(.blob-code code) {
     /* Space after border */
     padding-right: 10px !important;
     vertical-align: top;
-    word-wrap: normal;
-    white-space: pre;
-    /* Use pre instead of pre-wrap for ASCII art alignment */
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    /* Use pre-wrap for word wrapping */
     font-size: 13px;
     line-height: 2.5 !important;
     /* Synchronize line-height */
@@ -379,15 +380,21 @@ code:not(.blob-code code) {
         padding: 0;
     }
 
-    @page {
-        margin: 1.5cm;
-    }
-
     .highlight {
         background-color: #2D2A2E !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
+}
+
+/* Single page mode - prevent ALL page breaks */
+.single-page-mode * {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: avoid !important;
+    break-after: avoid !important;
+    break-inside: avoid !important;
 }
 
 /* HTML Tags in PHP (php-template) */
